@@ -9,25 +9,22 @@ const router = express.Router()
 const upload = multer({
   storage: multer.diskStorage({
     destination: function(req, file, cb) {
-      cb(null, "upload/")
+      cb(null, "profile_image/")
     },
     filename: function(req, file, cb) {
-      cb(null, req.body.name)
-      //path.extname(file.originalname)
+      console.log(req.body.name)
+      cb(null, req.body.name + "." + req.body.ex)
     }
   })
 })
 
-router.post("/signin", Signin)
 router.get("/token", Token)
-
+router.post("/signin", Signin)
 router.post("/signup", Signup)
-
-router.post("/profile", upload.single("image"), (req: Request, res: Response) => {
-  //안되면 bin
+router.post("/profile", upload.single("bin"), (req: Request, res: Response) => {
   res
     .status(200)
-    .send({ result: true, mes: "저장성공" })
+    .send({ state: true, result: "저장성공" })
     .end()
 })
 
