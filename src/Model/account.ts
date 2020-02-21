@@ -1,6 +1,6 @@
 import { model, Schema, Model, Document } from "mongoose"
 const userSchema = new Schema({
-  username: {
+  id: {
     type: String,
     required: true
   },
@@ -8,20 +8,25 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  username: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     required: true
   },
-  profile_image: {
+  profile: {
     type: String,
     required: true
   }
 })
 export interface UserDocument extends Document {
-  username: string
+  id: string
   password: string
+  username: string
   email: string
-  profile_image: string
+  profile: string
 }
 const User: Model<UserDocument> = model("user", userSchema)
 export default User
