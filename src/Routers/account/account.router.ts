@@ -2,7 +2,6 @@ import * as express from "express"
 import { Signin, Signup, Token } from "./account.controller"
 import { Request, Response } from "express"
 
-import * as path from "path"
 import * as multer from "multer"
 const router = express.Router()
 

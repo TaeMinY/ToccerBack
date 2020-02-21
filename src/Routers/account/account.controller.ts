@@ -69,27 +69,30 @@ export const Signup = async (req: Request, res: Response) => {
   })
 }
 export const Signin = (req: Request, res: Response) => {
-  const { email, password } = req.body
-  if (!email || !password) {
+  const { id, pwd } = req.body
+  if (!id || !pwd) {
     return Send(res, 200, "빈칸을 모두 입력해 주세요.", false)
   }
-  User.findOne({ email: email }, function(err, result) {
+  User.findOne({ id: id }, function(err, result) {
     if (err) throw err
     if (result != null) {
       // 만약 계정이 있을 때
-      bcrypt.compare(password, result.password, function(err, value) {
+      bcrypt.compare(pwd, result.password, function(err, value) {
         if (value == true) {
           //비밀번호O
           let token = jwt.sign(
             {
-              email: result.email
+              id: result.id
             },
             process.env.jwtpassword,
             {
               expiresIn: 44640
             }
           )
-          Send(res, 200, "로그인에 성공하였습니다!", true, token)
+          return res
+            .status(200)
+            .send({ state: true, result: "로그인이 되셨습니다.", token: token })
+            .end()
         } else {
           Send(res, 200, "비밀번호가 일치하지 않습니다.", false)
         }
