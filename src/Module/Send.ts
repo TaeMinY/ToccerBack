@@ -1,4 +1,7 @@
-function Send(res, status:number, mes?:string, result?: boolean, data?:any) {
-    res.status(status).send({result,mes,data}).end();
+function Send(res, status: number, result?: string, state?: boolean, data?: any) {
+  res
+    .status(status)
+    .send({ result, state, data })
+    .end()
 }
-export default Send;
+export default Send
