@@ -104,13 +104,15 @@ export const Signin = (req: Request, res: Response) => {
 }
 export const Token = (req: Request, res: Response) => {
   const { token } = req.body
+  if (!token) {
+    return Send(res, 200, "인증실패.", false)
+  }
   let decoded = jwt.verify(token, process.env.jwtpassword)
-  console.log(decoded)
-  User.findOne({ email: decoded.email }, function(err, result) {
+  User.findOne({ id: decoded.id }, function(err, result) {
     if (result) {
-      Send(res, 200, "인증성공.", true, token)
+      return Send(res, 200, "인증성공.", true)
     } else {
-      Send(res, 200, "인증실패.", false)
+      return Send(res, 200, "인증실패.", false)
     }
   })
 }
