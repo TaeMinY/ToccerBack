@@ -17,7 +17,7 @@ const upload = multer({
   })
 })
 
-router.get("/token", Token)
+router.post("/token", Token)
 router.post("/signin", Signin)
 router.post("/signup", Signup)
 router.post("/profile", upload.single("bin"), (req: Request, res: Response) => {
