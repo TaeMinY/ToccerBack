@@ -17,14 +17,14 @@ export const Create = async (req: Request, res: Response) => {
 
   User.findOne({ id: decoded.id }, async function(err, result) {
     if (result != null) {
-      const user: any = new Post({
+      const post: any = new Post({
         title: title,
         text: text,
         time: moment().format("YYYY-MM-DD-HH-mm-ss"),
         username: result.username,
         userId: result.id
       })
-      await user
+      await post
         .save()
         .then(data => {
           return res
@@ -36,5 +36,11 @@ export const Create = async (req: Request, res: Response) => {
     } else {
       return Send(res, 200, "게시물을 작성하지 못하였습니다.", false)
     }
+  })
+}
+export const FindAll = async (req: Request, res: Response) => {
+  Post.find({}, function(err, result) {
+    var r = result.reverse()
+    return Send(res, 200, "성공", true, r)
   })
 }
