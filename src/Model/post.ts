@@ -16,19 +16,17 @@ const postSchema = new Schema({
     type: String,
     required: true
   },
-  userId:{
-      type:String,
-      required:true
+  userId: {
+    type: String,
+    required: true
   }
 })
 export interface PostDocument extends Document {
-  data: any
+  title: string
   text: string
-  like: any
-  like_users: any
   time: string
-  email: string
-  name: string
+  username: string
+  userId: string
 }
 const Post: Model<PostDocument> = model("post", postSchema)
 export default Post
