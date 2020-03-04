@@ -19,6 +19,10 @@ const userSchema = new Schema({
   profile: {
     type: String,
     required: true
+  },
+  admin: {
+    type: Boolean,
+    required: true
   }
 })
 export interface UserDocument extends Document {
@@ -27,6 +31,7 @@ export interface UserDocument extends Document {
   username: string
   email: string
   profile: string
+  admin: boolean
 }
 const User: Model<UserDocument> = model("user", userSchema)
 export default User
