@@ -9,7 +9,7 @@ import * as jwt from "jsonwebtoken"
 require("dotenv").config()
 
 export const Create = async (req: Request, res: Response) => {
-  const { title, text, token } = req.body
+  const { title, text, token, type } = req.body
   if (!title || !text) {
     return Send(res, 200, "빈칸을 모두 입력해 주세요.", false)
   }
@@ -22,7 +22,8 @@ export const Create = async (req: Request, res: Response) => {
         text: text,
         time: moment().format("YYYY-MM-DD-HH-mm-ss"),
         username: result.username,
-        userId: result.id
+        userId: result.id,
+        type: type
       })
       await post
         .save()
@@ -38,6 +39,10 @@ export const Create = async (req: Request, res: Response) => {
     }
   })
 }
+export const Init = async (req: Request, res: Response) => {
+  Post.deleteMany({}, function(err) {})
+}
+
 export const FindAll = async (req: Request, res: Response) => {
   Post.find({}, function(err, result) {
     var r = result.reverse()
