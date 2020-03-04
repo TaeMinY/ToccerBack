@@ -47,7 +47,8 @@ export const Signup = async (req: Request, res: Response) => {
               password: hash,
               username: username,
               email: email,
-              profile: random + "." + profile__expansion
+              profile: random + "." + profile__expansion,
+              admin: false
             })
             await user
               .save()
@@ -110,7 +111,11 @@ export const Token = (req: Request, res: Response) => {
   let decoded = jwt.verify(token, process.env.jwtpassword)
   User.findOne({ id: decoded.id }, function(err, result) {
     if (result) {
-      return Send(res, 200, "인증성공.", true)
+      if (result.admin == true) {
+        return res.status(200).send({ result: "인증성공", state: true, admin: true })
+      } else {
+        return res.status(200).send({ result: "인증성공", state: true })
+      }
     } else {
       return Send(res, 200, "인증실패.", false)
     }
