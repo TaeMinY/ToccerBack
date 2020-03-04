@@ -19,6 +19,10 @@ const postSchema = new Schema({
   userId: {
     type: String,
     required: true
+  },
+  type:{
+    type: String,
+    required:true
   }
 })
 export interface PostDocument extends Document {
@@ -27,6 +31,7 @@ export interface PostDocument extends Document {
   time: string
   username: string
   userId: string
+  type: string
 }
 const Post: Model<PostDocument> = model("post", postSchema)
 export default Post
