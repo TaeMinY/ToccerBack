@@ -49,3 +49,9 @@ export const FindAll = async (req: Request, res: Response) => {
     return Send(res, 200, "성공", true, r)
   })
 }
+export const FindOne = async (req: Request, res: Response) => {
+  const { _id } = req.body
+  Post.findOne({ _id: _id }, function(err, result) {
+    return Send(res, 200, "성공", true, result)
+  })
+}
