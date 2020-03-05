@@ -105,6 +105,7 @@ export const Signin = (req: Request, res: Response) => {
 }
 export const Token = (req: Request, res: Response) => {
   const { token } = req.body
+  console.log(token)
   if (!token) {
     return Send(res, 200, "인증실패.", false)
   }
@@ -112,9 +113,9 @@ export const Token = (req: Request, res: Response) => {
   User.findOne({ id: decoded.id }, function(err, result) {
     if (result) {
       if (result.admin == true) {
-        return res.status(200).send({ result: "인증성공", state: true, admin: true })
+        return res.status(200).send({ result: "인증성공", state: true, admin: true, data: result })
       } else {
-        return res.status(200).send({ result: "인증성공", state: true })
+        return res.status(200).send({ result: "인증성공", state: true, data: result })
       }
     } else {
       return Send(res, 200, "인증실패.", false)
