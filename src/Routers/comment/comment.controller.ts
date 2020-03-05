@@ -11,6 +11,9 @@ require("dotenv").config()
 
 export const Create = async (req: Request, res: Response) => {
   const { post_id, text, token } = req.body
+  if (!token) {
+    return Send(res, 200, "로그인을 해주세요.", false)
+  }
   if (!text) {
     return Send(res, 200, "댓글을 입력해 주세요.", false)
   }
