@@ -14,6 +14,9 @@ export const Create = async (req: Request, res: Response) => {
   if (!text) {
     return Send(res, 200, "댓글을 입력해 주세요.", false)
   }
+  if (text.length > 40) {
+    return Send(res, 200, "댓글은 40자 이내로 작성해주세요.", false)
+  }
   let decoded = jwt.verify(token, process.env.jwtpassword)
 
   User.findOne({ id: decoded.id }, async function(err, result) {
@@ -37,4 +40,14 @@ export const Create = async (req: Request, res: Response) => {
       return Send(res, 200, "댓글을 작성하지 못하였습니다.", false)
     }
   })
+}
+export const Find = async (req: Request, res: Response) => {
+  const { post_id } = req.body
+  Comment.find({ post_id: post_id }, function(err, result) {
+    var r = result.reverse()
+    return Send(res, 200, "성공", true, r)
+  })
+}
+export const Init = async (req: Request, res: Response) => {
+  Comment.deleteMany({}, function(err) {})
 }
