@@ -1,10 +1,10 @@
-function socket(io){
-    io.on('connection', socket => {
-        console.log("연결")
-        socket.on("SendServer",data=>{
-            socket.emit("sendClient",data)
-            console.log(data)
-        })
+function socket(io) {
+  io.sockets.on("connection", socket => {
+    console.log("연결완료")
+    socket.on("SendServer", function(data) {
+      io.sockets.emit("sendClient", data)
+      console.log(data)
     })
+  })
 }
 export default socket
